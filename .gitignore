@@ -77,4 +77,10 @@ app.*.map.json
 06-week-6-authentication-security-fcm/campus_notify/
 06-week-6-authentication-security-fcm/screenshots/*.py
 
+# Week 7: refactor Clean Architecture dari campus_notify (minggu 6);
+# yang di-push hanya README.md, lib/, test/, docs/, screenshots/*.png
+# (project campus_notify/ hasil refactor tetap ada lokal)
+07-week-7-clean-architecture/campus_notify/
+07-week-7-clean-architecture/screenshots/*.py
+
 # Aturan ignore lama sudah dibersihkan saat restrukturisasi codelab

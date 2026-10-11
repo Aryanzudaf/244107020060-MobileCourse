@@ -29,7 +29,13 @@ Ringkasan portofolio praktikum Pemrograman Mobile — Aryan Zuda F
   mock auth + guard route + secure storage + Dio refresh-once + FCM
   (Fake deterministik), `flutter analyze` bersih + 12 test lolos.
 
+- **Minggu 7** (`07-week-7-clean-architecture/`):
+  refactor `campus_notify` ke Clean Architecture feature-first
+  (domain/data/presentation per fitur, interface + use case + DI
+  Riverpod + `Failure`), tiga grep sterilitas nol hasil,
+  `flutter analyze` bersih + 20 test lolos.
+
 ## Berikutnya
 
-Minggu 7–16 mengikuti modul codelab. Folder dan `README.md`
+Minggu 8–16 mengikuti modul codelab. Folder dan `README.md`
 placeholder sudah disiapkan; diisi bertahap setiap minggu.

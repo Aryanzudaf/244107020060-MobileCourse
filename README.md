@@ -23,7 +23,7 @@ Dokumentasi praktikum mingguan mata kuliah Pemrograman Mobile, Jurusan Teknologi
 | 04 | Networking & REST API | Selesai | [`04-...`](04-week-4-networking-rest-api) |
 | 05 | Local Storage & Offline-First | Selesai | [`05-...`](05-week-5-local-storage-offline-first) |
 | 06 | Authentication, Security & FCM | Selesai | [`06-...`](06-week-6-authentication-security-fcm) |
-| 07 | Clean Architecture | Belum mulai | [`07-...`](07-week-7-clean-architecture) |
+| 07 | Clean Architecture | Selesai | [`07-...`](07-week-7-clean-architecture) |
 | 08 | Mid Project Review & Code Review | Belum mulai | [`08-...`](08-week-8-mid-project-review) |
 | 09 | AI-assisted Development / Vibe Coding | Belum mulai | [`09-...`](09-week-9-ai-assisted-development) |
 | 10 | AI Feature Integration | Belum mulai | [`10-...`](10-week-10-ai-feature-integration) |
@@ -91,6 +91,14 @@ Detail: [`05-.../README.md`](05-week-5-local-storage-offline-first/README.md)
 - Token UI terpotong (12 karakter); `flutter analyze` bersih, 12 test lulus.
 
 Detail: [`06-.../README.md`](06-week-6-authentication-security-fcm/README.md)
+
+### Minggu 7 — Clean Architecture
+
+- Refactor `campus_notify` ke feature-first: `lib/features/<fitur>/{domain,data,presentation}` + `core/` (failures & format murni Dart).
+- Interface repository & `SessionStore` di domain, implementasi di data; use case `Login` dan `GetAnnouncement` untuk aturan bisnis; wiring DI terpusat di provider Riverpod.
+- Error seragam `Failure` (sealed) — UI hanya menerima `message`; tiga grep sterilitas nol hasil, `flutter analyze` bersih, 20 test lulus (use case diuji dengan repository palsu).
+
+Detail: [`07-.../README.md`](07-week-7-clean-architecture/README.md)
 
 ## Cara Menjalankan
 
