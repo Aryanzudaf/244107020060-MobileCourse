@@ -25,7 +25,11 @@ Ringkasan portofolio praktikum Pemrograman Mobile — Aryan Zuda F
   SharedPreferences + SQLite + dirty flag + sync + cache-first,
   `flutter analyze` bersih + 9 test lolos.
 
+- **Minggu 6** (`06-week-6-authentication-security-fcm/`):
+  mock auth + guard route + secure storage + Dio refresh-once + FCM
+  (Fake deterministik), `flutter analyze` bersih + 12 test lolos.
+
 ## Berikutnya
 
-Minggu 6–16 mengikuti modul codelab. Folder dan `README.md`
+Minggu 7–16 mengikuti modul codelab. Folder dan `README.md`
 placeholder sudah disiapkan; diisi bertahap setiap minggu.
