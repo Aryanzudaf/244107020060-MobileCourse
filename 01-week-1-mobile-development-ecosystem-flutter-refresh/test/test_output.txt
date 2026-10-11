@@ -1,0 +1,5 @@
+00:00 +0: loading D:/KODING/SMT-5/MOBILE-SMT-5/244107020060-MobileCourse/01-week-1-mobile-development-ecosystem-flutter-refresh/my_first_app/test/widget_test.dart
+00:00 +0: Latihan mandiri Dart hitungLuasPersegiPanjang menghitung dengan benar
+00:00 +1: Latihan mandiri Dart Profil menampilkan fallback saat email kosong
+00:00 +2: StudentCardApp widget menampilkan identitas Aryan Zuda F
+00:01 +3: All tests passed!

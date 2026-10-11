@@ -55,6 +55,4 @@ app.*.map.json
 02-week-2-declarative-ui-responsive-design/responsive_dashboard/
 02-week-2-declarative-ui-responsive-design/*_output.txt
 
-# Sisa folder lama (segera dihapus, hanya berisi direktori kosong terkunci)
-W2/
-_hapus_W2/
+# Aturan ignore lama sudah dibersihkan saat restrukturisasi codelab
