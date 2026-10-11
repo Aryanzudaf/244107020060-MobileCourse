@@ -17,7 +17,15 @@ Ringkasan portofolio praktikum Pemrograman Mobile — Aryan Zuda F
   loading/error/success, retry manual), `flutter analyze` bersih
   + 7 test lolos.
 
+- **Minggu 4** (`04-week-4-networking-rest-api/`):
+  Dio terpusat + repository + `AsyncValue` 4 state + pagination
+  + detail/komentar, `flutter analyze` bersih + 12 test lolos.
+
+- **Minggu 5** (`05-week-5-local-storage-offline-first/`):
+  SharedPreferences + SQLite + dirty flag + sync + cache-first,
+  `flutter analyze` bersih + 9 test lolos.
+
 ## Berikutnya
 
-Minggu 4–16 mengikuti modul codelab. Folder dan `README.md`
+Minggu 6–16 mengikuti modul codelab. Folder dan `README.md`
 placeholder sudah disiapkan; diisi bertahap setiap minggu.

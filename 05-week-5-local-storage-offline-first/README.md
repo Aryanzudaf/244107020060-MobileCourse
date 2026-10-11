@@ -1,15 +1,223 @@
-# 05 Week 05: Local Storage & Offline-First
+# Minggu 5 — Penyimpanan Lokal & Offline-First
 
-Dokumentasi hasil pengerjaan Praktikum Pemrograman Mobile Minggu ke-5.
-Status: **Belum mulai** — folder ini disiapkan mengikuti struktur
-repository portfolio 16 minggu pada codelab.
+Preferensi di `SharedPreferences`, catatan di SQLite (`sqflite`) lewat
+repository lokal + Riverpod, dengan pola **offline-first**: cache-first
+read, dirty flag, dan antrean sinkronisasi.
 
-Nama: Aryan Zuda F (NIM 244107020060, Kelas TI-3D)
+**Aryan Zuda F · NIM 244107020060 · TI-3D**
 
-## Rencana Isi
+## Gambaran aplikasi
 
-- README.md berisi tujuan, fitur utama, stack teknologi, cara
-  menjalankan, dan hasil yang dicapai.
-- lib/ berisi salinan kode final untuk portofolio.
-- 	est/ berisi salinan test final dan hasil eksekusinya.
-- screenshots/ (atau docs/) berisi bukti visual dan dokumentasi.
+`PrefsRepository` + `SharedPreferences` menyimpan tema gelap/terang dan
+waktu terakhir dibuka. `NoteRepository` + Riverpod menyimpan CRUD catatan
+persisten di SQLite, diurutkan `updated_at` terbaru. Tiap perubahan lokal
+ditandai `dirty = 1`; tombol **Sync** menjalankan `syncNotes()` (hitung
+kotor → simulasi upload → `markAllSynced()`), dan badge kembali nol
+setelah sukses. `GET /posts` dibaca cache-first: cache lokal tampil
+seketika, refresh jaringan jalan di background dan hasilnya disimpan ke
+`cached_posts`. Toggle `forceOffline` membuat simulasi offline
+deterministik. Detail `/note/:id` dibaca langsung dari repository lokal.
+9 test lulus tanpa SQLite/HTTP sungguhan.
+
+**Stack:** Flutter 3.47 (Dart 3.13) · `flutter_riverpod` ^3 ·
+`shared_preferences` · `sqflite` + `path` · `dio` · `go_router` ·
+`sqflite_common_ffi_web` (demo/screenshot web) · `flutter_test`.
+
+## Isi folder
+
+```text
+05-week-5-local-storage-offline-first/
+├── week5_offline_notes/        # Project Flutter yang dapat dijalankan
+│   ├── lib/
+│   │   ├── main.dart           # ProviderScope + GoRouter (/ , /settings, /posts, /note/:id)
+│   │   ├── data/
+│   │   │   ├── prefs.dart               # PrefsRepository (SharedPreferences)
+│   │   │   ├── providers.dart           # provider Riverpod + AsyncNotifier
+│   │   │   ├── sync.dart                # syncNotes + PostCacheStore
+│   │   │   ├── api_client.dart          # createDio() terpusat
+│   │   │   ├── network_errors.dart      # friendlyErrorMessage + OfflineException
+│   │   │   ├── preview_fakes.dart       # fakes khusus screenshot (?demo=)
+│   │   │   ├── local/
+│   │   │   │   ├── db.dart              # openNotesDb() + skema
+│   │   │   │   ├── note.dart            # model Note (dirty flag)
+│   │   │   │   └── notes_database_factory.dart  # init factory web (ffi_web)
+│   │   │   ├── models/post.dart
+│   │   │   └── repositories/
+│   │   │       ├── note_repository.dart # satu-satunya pintu ke tabel notes
+│   │   │       └── post_repository.dart
+│   │   ├── pages/ (notes_page.dart, settings_page.dart, posts_page.dart, note_detail_page.dart)
+│   │   └── widgets/note_tile.dart       # NoteTile + badge
+│   └── test/
+│       ├── note_test.dart      # model + provider + sync + prefs mock
+│       ├── widget_test.dart    # NoteTile badge
+│       └── fakes.dart          # FakeNoteRepository (tanpa SQLite)
+├── lib/                        # Salinan kode final (untuk portofolio)
+├── test/                       # Salinan test final (untuk portofolio)
+├── docs/
+│   └── ai-challenge.md         # Prompt, tabel storage, verifikasi, keputusan
+├── screenshots/
+└── README.md
+```
+
+> Yang bisa dijalankan ada di `week5_offline_notes/` (di-ignore Git).
+> `lib/` dan `test/` adalah salinan final untuk portofolio.
+
+## Cara kerja lapisan lokal
+
+```text
+UI (ConsumerWidget) --watch--> Provider (AsyncValue)
+Provider --panggil--> LocalRepository --CRUD--> SQLite
+LocalRepository --sync--> Remote (simulasi) --sukses--> dirty = 0
+Cache: baca lokal dulu, refresh background, simpan
+```
+
+UI tidak menyentuh SQLite/SharedPreferences langsung. Repository
+mengubah exception platform menjadi kegagalan yang bermakna, provider
+mengekspos `AsyncValue` ke UI.
+
+## Preferensi
+
+`PrefsRepository` memusatkan `getDarkMode`, `setDarkMode`,
+`markOpenedNow`, dan `getLastOpened`; `DarkModeNotifier` membungkusnya
+dalam `AsyncNotifierProvider`, dan tema aplikasi mengikutinya.
+
+**Tema terang.**
+![Pengaturan terang](screenshots/settings.png)
+
+**Tema gelap.**
+![Pengaturan gelap](screenshots/settings-dark.png)
+
+## Catatan offline
+
+Catatan tersimpan di perangkat sehingga tetap berfungsi penuh dalam
+mode pesawat. `NoteTile` menampilkan badge **Belum tersinkron** bila
+`dirty == true`.
+
+**Daftar + badge dirty.**
+![Daftar catatan](screenshots/notes-list.png)
+
+**Dialog tambah.**
+![Tambah catatan](screenshots/add-note.png)
+
+**Detail `/note/:id`** (dibaca dari repository lokal, bukan state list).
+![Detail catatan](screenshots/note-detail.png)
+
+## Sinkronisasi
+
+**Sebelum sync (2 dirty).**
+![Sebelum sync](screenshots/notes-list.png)
+
+**Sesudah sync (0 dirty).**
+![Sesudah sync](screenshots/sync-success.png)
+
+## Bukti mode pesawat
+
+Catatan tetap tampil, bisa ditambah, badge tetap akurat tanpa jaringan.
+Toggle `forceOffline` membuat simulasi deterministik; banner "Mode
+offline" tampil di atas daftar.
+
+![Catatan offline](screenshots/offline-notes.png)
+
+## Cache-first untuk data API
+
+Halaman **Data API** menampilkan cache lokal seketika (`cached_posts`),
+lalu refresh `GET /posts` di background. Bila refresh gagal, cache tetap
+tampil dengan penanda error; bila offline, banner + pesan tampil dan
+refresh dilewati.
+
+**Cache tampil seketika (demo deterministik).**
+![Dari cache](screenshots/posts.png)
+
+**Refresh gagal, cache tetap tampil (demo).**
+![Refresh gagal](screenshots/posts-offline.png)
+
+Mode demo (`?demo=seedposts`, `?demo=cachefail`) memakai data contoh
+tanpa DB/network agar deterministik di screenshot; jalur asli
+(`PostCacheStore` + Dio) tetap dipakai di perangkat. Pada pemakaian
+nyata, halaman ini menampilkan cache lokal seketika lalu refresh
+`GET /posts` di background dan menyimpan hasilnya.
+
+**Aturan konflik saya:** last-write-wins berdasarkan `updated_at`.
+Daftar diurutkan `updated_at DESC`; saat sync, catatan terbaru menang.
+Eksplisit agar sinkronisasi dua arah tidak menimpa data diam-diam.
+
+## Yang saya refactor
+
+- **`NoteTile`** jadi widget tersendiri di `lib/widgets/` dengan badge
+  saat `dirty == true` (callback `onDelete` agar mudah diuji).
+- **`sync.dart`** menampung cache posts (`PostCacheStore`), `syncNotes`,
+  dan `loadPostsCacheFirst` agar repository fokus pada CRUD.
+- **Detail `/note/:id`** membaca dari repository lokal
+  (`noteDetailProvider`), bukan state halaman list.
+
+## Bukti uji
+
+```bash
+cd week5_offline_notes
+flutter analyze
+flutter test
+```
+
+```text
+Analyzing week5_offline_notes...
+No issues found!
+
+00:00 +9: All tests passed!
+```
+
+![flutter analyze dan flutter test](screenshots/analyze-test.png)
+
+## Menjalankan
+
+```bash
+cd week5_offline_notes
+flutter pub get
+flutter run                 # Android/desktop
+flutter run -d chrome       # Web (butuh sqflite_common_ffi_web)
+```
+
+Aplikasi membuka **Catatan Offline** (`/`). Ikon cloud membuka Data API
+(`/posts`), ikon gerigi membuka Pengaturan (`/settings`), menekan
+catatan membuka detail (`/note/:id`).
+
+## Hasil verifikasi AI saya
+
+- Daftar catatan tidak di SharedPreferences — AI pun menyarankan sqflite.
+- Skema mendukung antrean sync — saya tambah kolom `dirty` (AI hanya
+  punya `updated_at`).
+- Klaim "real-time" didukung — reaktivitas via Riverpod invalidate,
+  bukan asumsi stream.
+- Boilerplate masuk akal — `flutter pub add sqflite path` ringan, tanpa codegen.
+- Test field hilang + repository palsu — `note_test.dart` + `FakeNoteRepository`.
+- `flutter analyze` dan `flutter test` lolos — bersih, 9 test lulus.
+
+## Checklist saya
+
+- [x] Semua lewat repository + provider, tanpa akses langsung.
+- [x] Fungsi penuh dalam mode pesawat: baca, tambah, hapus.
+- [x] Badge akurat sebelum/sesudah sync; cache tampil tanpa internet.
+- [x] `flutter analyze` tanpa issue dan semua test lulus.
+- [x] Hasil AI terdokumentasi di `docs/`.
+
+## Refleksi
+
+**Mengapa daftar catatan tidak boleh di SharedPreferences?**
+SharedPreferences hanya untuk primitif kecil. Koleksi sebagai satu
+string JSON membuat query, update parsial, dan sinkronisasi rapuh dan
+lambat — tanpa transaksi pula.
+
+**Kapan cache-first cukup, kapan network-first?**
+Cache-first untuk data yang boleh sedikit basi (daftar post, katalog).
+Network-first untuk yang harus akurat saat itu juga (harga, saldo).
+
+**Bagaimana dirty flag jadi antrean tanpa memblokir UI?**
+Perubahan lokal langsung menulis ke SQLite + `dirty = 1`; UI selesai
+tanpa menunggu jaringan. Sync jalan di background dan menandai bersih
+hanya setelah sukses. Tabel outbox terpisah baru perlu saat operasi
+harus terkirim berurutan beserta riwayat create/update/delete.
+
+**Bagian hasil AI yang saya perbaiki?**
+Kolom `dirty` untuk antrean sync, tabel `cached_posts` untuk
+cache-first, aturan konflik eksplisit, dan test repository palsu.
+
+Detail lengkap: [`docs/ai-challenge.md`](docs/ai-challenge.md).
