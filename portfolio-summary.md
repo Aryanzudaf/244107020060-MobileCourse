@@ -12,7 +12,12 @@ Ringkasan portofolio praktikum Pemrograman Mobile — Aryan Zuda F
   Academic Overview responsif (1/2 kolom), tema terang/gelap,
   `CupertinoSwitch`, `Semantics`, `flutter analyze` bersih + 4 test lolos.
 
+- **Minggu 3** (`03-week-3-navigation-state-management/`):
+  GoRouter multi-halaman + Riverpod ToDo (filter, `AsyncValue`
+  loading/error/success, retry manual), `flutter analyze` bersih
+  + 7 test lolos.
+
 ## Berikutnya
 
-Minggu 3–16 mengikuti modul codelab. Folder dan `README.md`
+Minggu 4–16 mengikuti modul codelab. Folder dan `README.md`
 placeholder sudah disiapkan; diisi bertahap setiap minggu.
