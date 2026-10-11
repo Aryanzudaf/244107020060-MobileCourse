@@ -50,5 +50,7 @@ app.*.map.json
 # Week 1: yang di-push hanya lib/, my_first_app/ (tanpa build), screenshots/*.png, README.md
 W1/*_output.txt
 
-# Minggu lain belum dipush
-W2/
+# Week 2: yang di-push hanya README.md, lib/, test/, screenshots/*.png
+# (project responsive_dashboard/ tetap ada lokal agar analyze/test/build tetap jalan)
+W2/responsive_dashboard/
+W2/*_output.txt

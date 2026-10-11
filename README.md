@@ -18,7 +18,7 @@ Dokumentasi praktikum mingguan mata kuliah Pemrograman Mobile, Jurusan Teknologi
 | Minggu | Topik | Status | Direktori |
 | --- | --- | --- | --- |
 | 01 | Mobile Development Ecosystem & Flutter Refresh | Selesai | [`W1/`](W1) |
-| 02 | Declarative UI & Responsive Design | Belum mulai | [`W2/`](W2) |
+| 02 | Declarative UI & Responsive Design | Selesai | [`W2/`](W2) |
 | 03 | Navigation & State Management (Riverpod) | Belum mulai | — |
 | 04 | Networking & REST API | Belum mulai | — |
 | 05 | Local Storage & Offline-First | Belum mulai | — |
@@ -43,6 +43,15 @@ Dokumentasi praktikum mingguan mata kuliah Pemrograman Mobile, Jurusan Teknologi
 - Catatan: perbedaan hot reload dan hot restart + refleksi.
 
 Detail: [`W1/README.md`](W1/README.md)
+
+### Minggu 2 — Declarative UI & Responsive Design
+
+- Halaman Academic Overview: header profil (Aryan Zuda F, NIM 244107020060, TI-3D) dan enam kartu informasi (IPK, SKS, Kehadiran, Status, Tugas, Beban SKS).
+- Layout responsif: satu kolom di layar sempit, dua kolom di layar lebar (breakpoint 700).
+- Light/dark theme lewat `CupertinoSwitch`, dilengkapi label `Semantics`.
+- Widget test untuk tampilan responsif (4 test lolos).
+
+Detail: [`W2/README.md`](W2/README.md)
 
 ## Cara Menjalankan
 

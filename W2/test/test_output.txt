@@ -1,0 +1,6 @@
+00:00 +0: loading D:/KODING/SMT-5/MOBILE-SMT-5/244107020060-MobileCourse/W2/responsive_dashboard/test/widget_test.dart
+00:00 +0: Academic Overview Dashboard Responsive & Interaction Tests Dashboard satu kolom di layar sempit (< 700px)
+00:01 +1: Academic Overview Dashboard Responsive & Interaction Tests Dashboard dua kolom di layar lebar (>= 700px)
+00:01 +2: Academic Overview Dashboard Responsive & Interaction Tests Header profil menampilkan data mahasiswa dengan tepat
+00:01 +3: Academic Overview Dashboard Responsive & Interaction Tests Toggle tema dengan CupertinoSwitch mengubah ThemeMode
+00:02 +4: All tests passed!
