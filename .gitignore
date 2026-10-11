@@ -48,9 +48,13 @@ app.*.map.json
 .widget_preview/
 
 # Week 1: yang di-push hanya lib/, my_first_app/ (tanpa build), screenshots/*.png, README.md
-W1/*_output.txt
+01-week-1-mobile-development-ecosystem-flutter-refresh/*_output.txt
 
 # Week 2: yang di-push hanya README.md, lib/, test/, screenshots/*.png
 # (project responsive_dashboard/ tetap ada lokal agar analyze/test/build tetap jalan)
-W2/responsive_dashboard/
-W2/*_output.txt
+02-week-2-declarative-ui-responsive-design/responsive_dashboard/
+02-week-2-declarative-ui-responsive-design/*_output.txt
+
+# Sisa folder lama (segera dihapus, hanya berisi direktori kosong terkunci)
+W2/
+_hapus_W2/

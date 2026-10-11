@@ -153,7 +153,7 @@ Dilakukan **setelah** implementasi mandiri selesai:
 ## Cara Menjalankan
 
 ```
-cd W2/responsive_dashboard
+cd 02-week-2-declarative-ui-responsive-design/responsive_dashboard
 flutter pub get
 flutter analyze
 flutter test
