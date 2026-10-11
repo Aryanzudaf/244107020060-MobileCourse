@@ -211,3 +211,10 @@ yang sudah deprecated.
 - Folder `test/` sudah tersimpan pada folder tugas Week 2.
 - File `README.md` sudah tersimpan pada folder tugas Week 2.
 - Semua file tugas Week 2 sudah diperiksa sebelum dikumpulkan.
+
+## Referensi
+
+- [Dokumentasi UI Flutter](https://docs.flutter.dev/ui)
+- [Membangun aplikasi responsif](https://docs.flutter.dev/ui/layout/responsive)
+- [Material Design 3](https://m3.material.io/)
+- [Aksesibilitas Flutter](https://docs.flutter.dev/ui/accessibility-and-internationalization/accessibility)
